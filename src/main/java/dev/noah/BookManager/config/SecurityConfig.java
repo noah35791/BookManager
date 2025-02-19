@@ -3,6 +3,7 @@ package dev.noah.BookManager.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -21,13 +22,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("filterchain1234");
         return http
-                .authorizeHttpRequests(request -> request.anyRequest().permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-//                        .requestMatchers("/api/users/**").authenticated()
-//                        .requestMatchers(HttpMethod.POST,"/api/books").authenticated()
-//                        .requestMatchers(HttpMethod.GET, "/api/books").permitAll()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers("/api/users/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/books").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/books").permitAll()
                 )
                 .csrf(customizer -> customizer.disable())
                 .formLogin(Customizer.withDefaults())

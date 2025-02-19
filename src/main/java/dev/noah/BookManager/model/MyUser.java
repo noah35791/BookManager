@@ -23,11 +23,11 @@ public class MyUser implements UserDetails {
     private ArrayList<String> startedBooks = new ArrayList<>();
     private ArrayList<String> finishedBooks = new ArrayList<>();
 
-//    public MyUser(String username, String password, String email) {
-//        this.username = username;
-//        this.password = password;
-//        this.email = email;
-//    }
+    public MyUser(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public MyUser(){}
 

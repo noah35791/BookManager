@@ -3,6 +3,8 @@ package dev.noah.BookManager.controller;
 import dev.noah.BookManager.model.MyUser;
 import dev.noah.BookManager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,32 +17,33 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public MyUser register(@RequestBody MyUser user) {
-        return service.createUser(user);
+    public ResponseEntity<MyUser> register(@RequestBody MyUser user) {
+        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<MyUser> getUsers() {
-        return service.getUsers();
+    public ResponseEntity<List<MyUser>> getUsers() {
+        return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
     }
 
     @PatchMapping("/{username}/books/{isbn}/choose")
-    public MyUser chooseBook(@PathVariable String username, @PathVariable String isbn) {
-        return service.chooseBook(username, isbn);
+    public ResponseEntity<MyUser> chooseBook(@PathVariable String username, @PathVariable String isbn) {
+        return new ResponseEntity<>(service.chooseBook(username, isbn), HttpStatus.OK);
     }
 
     @PatchMapping("/{username}/books/{isbn}/start")
-    public MyUser startedBook(@PathVariable String username, @PathVariable String isbn) {
-        return service.startBook(username, isbn);
+    public ResponseEntity<MyUser> startedBook(@PathVariable String username, @PathVariable String isbn) {
+        return new ResponseEntity<>(service.startBook(username, isbn), HttpStatus.OK);
     }
 
     @PatchMapping("/{username}/books/{isbn}/finish")
-    public MyUser finishedBook(@PathVariable String username, @PathVariable String isbn) {
-        return service.finishBook(username, isbn);
+    public ResponseEntity<MyUser> finishedBook(@PathVariable String username, @PathVariable String isbn) {
+        return new ResponseEntity<>(service.finishBook(username, isbn), HttpStatus.OK);
     }
 
     @DeleteMapping("/{username}")
-    public Integer deleteUser(@PathVariable String username) {
-        return service.deleteUser(username);
+    public ResponseEntity<Integer> deleteUser(@PathVariable String username) {
+        service.deleteUser(username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
